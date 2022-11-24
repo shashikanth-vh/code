@@ -57,7 +57,7 @@ public class Shell {
         */
         String login = "/usr/local/bin/argocd login argocd-server.argocd:80 --username  admin --insecure --password " + argoToken + "; ";
         String createApp = "/usr/local/bin/argocd app create " + appName + " --repo " + appRepo + " --path " + app + " --dest-server https://kubernetes.default.svc --dest-namespace default; ";
-        String syncApp =  "/usr/local/bin/argocd app set guestbook --sync-policy automated";
+        String syncApp =  "/usr/local/bin/argocd app set " + appName + " --sync-policy automated";
 
 
         test(login + createApp + syncApp);
