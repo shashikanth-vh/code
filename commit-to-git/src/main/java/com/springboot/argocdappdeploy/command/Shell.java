@@ -61,11 +61,9 @@ public class Shell {
         //move values.yaml
         test("mv /bin/values.yaml /helm-charts/example-app/");
 
-        String script = "./git.sh;";
-        String username = "shashikanth-vh;";
-        String passwd = "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";
+        String script = "./bin/git.sh ;";
 
-        test(script + username + passwd);
+        test(script + "" + "");
 
     }
 
