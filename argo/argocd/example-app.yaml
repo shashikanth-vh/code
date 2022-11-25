@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-app-deploy
+  namespace: default
+  labels:
+    app: argocd-app-deploy
+spec:
+  selector:
+    matchLabels:
+      app: argocd-app-deploy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: argocd-app-deploy
+    spec:      
+      containers:
+        - image: shashikanthvh/argocdappdeploy
+          imagePullPolicy: Always
+          name: argocd-app-deploy         
+          env:            
+            - name: ARGO-TOKEN
+              value: "tQvrTkZoyuF6O-lx"
+            - name: APP-NAME
+              value: "hw"
+            - name: APP-REPO
+              value: "https://github.com/shashikanth-vh/helm-charts.git"
+            - name: APP
+              value: "hello-world"   
+          ports:
+            - containerPort: 8082
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-app-deploy
+  labels:
+    app: argocd-app-deploy
+spec:
+  selector:
+    app: argocd-app-deploy
+  type: NodePort
+  ports:
+    - port: 8082
+      targetPort: 8082
+      nodePort: 30203
+          

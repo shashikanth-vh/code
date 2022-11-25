@@ -1,0 +1,68 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: k8s-jobs-
+spec:
+  entrypoint: k8s-manifest
+  templates:
+  - name: k8s-manifest
+    resource:
+        action: create
+        # successCondition and failureCondition are optional expressions which are
+        # evaluated upon every update of the resource. If failureCondition is ever
+        # evaluated to true, the step is considered failed. Likewise, if successCondition
+        # is ever evaluated to true the step is considered successful. It uses kubernetes
+        # label selection syntax and can be applied against any field of the resource
+        # (not just labels). Multiple AND conditions can be represented by comma
+        # delimited expressions. For more details, see:
+        # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+        successCondition: status.succeeded > 0
+        failureCondition: status.failed > 3
+        manifest: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: argocd-app-deploy
+            namespace: default
+            labels:
+              app: argocd-app-deploy
+          spec:
+            selector:
+              matchLabels:
+                app: argocd-app-deploy
+            replicas: 1
+            template:
+              metadata:
+                labels:
+                  app: argocd-app-deploy
+              spec:      
+                containers:
+                  - image: shashikanthvh/argocdappdeploy
+                    imagePullPolicy: Always
+                    name: argocdappdeploy          
+                    env:            
+                      - name: ARGO-TOKEN
+                        value: "tQvrTkZoyuF6O-lx"
+                      - name: APP-NAME
+                        value: "hw"
+                      - name: APP-REPO
+                        value: "https://github.com/shashikanth-vh/helm-charts.git"
+                      - name: APP
+                        value: "example-app"      
+                    ports:
+                      - containerPort: 8082                   
+    # Resource templates can have output parameters extracted from fields of the
+    # resource. Two techniques are provided: jsonpath and a jq filter.
+    outputs:
+      parameters:
+      # job-name is extracted using a jsonPath expression and is equivalent to:
+      # `kubectl get job <jobname> -o jsonpath='{.metadata.name}'`
+      - name: job-name
+        valueFrom:
+          jsonPath: '{.metadata.name}'
+      # job-obj is extracted using a jq filter and is equivalent to:
+      # `kubectl get job <jobname> -o json | jq -c '.'
+      # which returns the entire job object in json format
+      - name: job-obj
+        valueFrom:
+          jqFilter: '.'
