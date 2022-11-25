@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app
+  namespace: default
+  labels:
+    app: example-app
+spec:
+  selector:
+    matchLabels:
+      app: example-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:      
+      containers:
+        - image: shashikanthvh/example-app
+          imagePullPolicy: Always
+          name: example-app         
+          env:                        
+            - name: APP-NAME
+              value: "hw"
+          ports:
+            - containerPort: 8084
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-app
+  labels:
+    app: example-app
+spec:
+  selector:
+    app: example-app
+  type: NodePort
+  ports:
+    - port: 8084
+      targetPort: 8084
+      nodePort: 30204
+          
