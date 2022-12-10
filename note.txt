@@ -1,0 +1,16 @@
+
+kubectl -n argo-events apply -f event-source.yaml
+# Port forward command because this is being run on a Minikube cluster
+$ kubectl -n argo-events port-forward $(kubectl -n argo-events get pod -l eventsource-name=webhook -o name) 12000:12000 &
+# Test Webhook
+$ cur http://128.224.249.11:12000/deploy
+
+kubectl -n argo-events logs webhook-eventsource-n6g9n-d5c8f7985-s8msz
+
+
+kubectl -n argo-events apply -f sensor-service-accounts.yaml
+kubectl -n argo-events apply -f first-workflow-service-account.yaml
+
+kubectl -n argo-events apply -f webhook-sensor.yaml
+# The sensor controller creates a deployment for the sensor
+$ kubectl  -n argo-events get deployments -l sensor-name=webhook
