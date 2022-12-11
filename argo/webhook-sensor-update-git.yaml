@@ -37,7 +37,16 @@ spec:
  #                   parameters:
  #                   - name: message
                   container:
-                    image: shashikanthvh/git-commit-app:latest
+                    image: shashikanthvh/git-commit-app-1:latest
+                    env:            
+                      - name: REPO
+                        value: "https://github.com/shashikanth-vh/helm-charts.git"  
+                      - name: REPO_USER_NAME
+                        value: "shashikanth-vh"           
+                      - name: REPO_PASS
+                        value: "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"
+                      - name: USER_EMAIL
+                        value: "shashikanth.vh@gmail.com"               
 #                    command: [cowsay]
 #                    args: ["{{inputs.parameters.message}}"]
           parameters:
