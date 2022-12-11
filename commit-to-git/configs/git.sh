@@ -10,4 +10,8 @@ ${GIT} commit -m "$message"
 #gitPush=$(${GIT} push -vvv git@github.com:shashikanth-vh/helm-charts.git master 2>&1)
 #echo "$gitPush"
 #git push origin main
-git push https://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@github.com/shashikanth-vh/helm-charts.git
+#echo https://$1@github.com/$2/helm-charts.git
+
+git push https://$1@github.com/$2/helm-charts.git
+
+#git push https://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@github.com/shashikanth-vh/helm-charts.git
