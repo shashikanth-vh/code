@@ -41,11 +41,11 @@ spec:
                     imagePullPolicy: Always
                     name: argocdappdeploy          
                     env:            
-                      - name: ARGO-TOKEN
+                      - name: ARGOTOKEN
                         value: "tQvrTkZoyuF6O-lx"
-                      - name: APP-NAME
+                      - name: APPNAME
                         value: "hw"
-                      - name: APP-REPO
+                      - name: APPREPO
                         value: "https://github.com/shashikanth-vh/helm-charts.git"
                       - name: APP
                         value: "example-app"      
