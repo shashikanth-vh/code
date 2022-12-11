@@ -50,7 +50,7 @@ spec:
                     name: argocddeployapp          
                     env:            
                       - name: ARGOTOKEN
-                        value: "tQvrTkZoyuF6O-lx"
+                        value: "33r2p31G8fxnoOxP"
                       - name: APPNAME
                         value: "hw"
                       - name: APPREPO
