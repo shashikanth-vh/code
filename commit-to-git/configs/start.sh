@@ -22,6 +22,9 @@
 echo "Starting app"
 #chmod 777 /usr/local/bin/argocd
 
+git config --global user.email "shashikanth.vh@gmail.com"
+git config --global user.name "shashikanth-vh"
+
 umask 0027
 #cd /usr/app || exit
 java -Dlog4j2.formatMsgNoLookups=true -jar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 /spring-boot-2-rest-service-basic-0.0.1-SNAPSHOT.jar

@@ -5,4 +5,4 @@ image:
   pullPolicy: Always
 service:
   type: NodePort
-  port: 30204
+  port: 31004
