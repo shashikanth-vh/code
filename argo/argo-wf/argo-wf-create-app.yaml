@@ -35,7 +35,6 @@ spec:
           kind: Job
           metadata:
             name: argocd-deploy-app
-            namespace: default
             labels:
               app: argocd-deploy-app
           spec:            
@@ -78,7 +77,6 @@ spec:
           kind: Job
           metadata:
             name: app-test
-            namespace: default
             labels:
               app: app-test
           spec:            
