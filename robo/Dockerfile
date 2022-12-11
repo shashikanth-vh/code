@@ -12,7 +12,7 @@ FROM python:3.10.0a6-buster
 
 LABEL name="Docker build demo Robot Framework"
 
-MAINTAINER "JDriven" <info@jdriven.com>
+MAINTAINER "demo" <info@demo.com>
 
 RUN apt-get update \
     && apt-get install -y xvfb wget ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 \
@@ -23,6 +23,18 @@ RUN python3 -m pip install robotframework && pip install robotframework-requests
     && pip install xvfbwrapper && pip install robotframework-xvfb && pip install certifi && pip install asn1crypto \
     && pip install bcrypt && pip install robotframework-sshlibrary && pip install cryptography && pip install pyOpenSSL \
     && pip install idna && pip install requests[security]
+    
+RUN mkdir -p /reports
+RUN mkdir -p /scripts
+RUN mkdir -p /suites
+
+RUN chmod -R 777 /reports
+RUN chmod -R 777 /scripts
+RUN chmod -R 777 /suites
+
+COPY reports/ /reports
+COPY scripts/ /scripts
+COPY suites/ /suites
 
 # install chrome and chromedriver in one run command to clear build caches for new versions (both version need to match)
 #RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
